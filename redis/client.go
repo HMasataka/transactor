@@ -27,11 +27,11 @@ type clientProvider struct {
 	connectionProvider ConnectionProvider
 }
 
-func NewClientProvider(connectionProvider ConnectionProvider) *clientProvider {
+func NewClientProvider(connectionProvider ConnectionProvider) ClientProvider {
 	return NewShardingClientProvider(connectionProvider, defaultShardKeyProvider)
 }
 
-func NewShardingClientProvider(connectionProvider ConnectionProvider, shardKeyProvider transactor.ShardKeyProvider) *clientProvider {
+func NewShardingClientProvider(connectionProvider ConnectionProvider, shardKeyProvider transactor.ShardKeyProvider) ClientProvider {
 	return &clientProvider{
 		shardKeyProvider:   shardKeyProvider,
 		connectionProvider: connectionProvider,
