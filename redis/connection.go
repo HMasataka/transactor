@@ -2,21 +2,10 @@ package redis
 
 import (
 	"context"
-	"fmt"
 
 	"github.com/HMasataka/transactor"
 	"github.com/redis/go-redis/v9"
 )
-
-type contextTransactionKey string
-
-var defaultShardKeyProvider = func(ctx context.Context) string {
-	return "redis"
-}
-
-func contextKey(shardKey string) contextTransactionKey {
-	return contextTransactionKey(fmt.Sprintf("current_%s_tx", shardKey))
-}
 
 type ConnectionProvider interface {
 	CurrentConnection(ctx context.Context) *redis.Client
@@ -42,7 +31,7 @@ type ShardingConnectionProvider struct {
 	maxSlot          uint32
 }
 
-func NewShardingConnectionProvider(db []*redis.Client, shardKeyProvider transactor.ShardKeyProvider) *ShardingConnectionProvider {
+func NewShardingConnectionProvider(db []*redis.Client, shardKeyProvider transactor.ShardKeyProvider) ConnectionProvider {
 	return &ShardingConnectionProvider{
 		db:               db,
 		shardKeyProvider: shardKeyProvider,
