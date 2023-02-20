@@ -17,7 +17,6 @@ type Option interface {
 	Apply(*Config)
 }
 
-// read only transaction
 type ReadOnly bool
 
 func (o ReadOnly) Apply(c *Config) {
@@ -28,7 +27,6 @@ func OptionReadOnly() ReadOnly {
 	return true
 }
 
-// rollback only transaction
 type RollbackOnly bool
 
 func (o RollbackOnly) Apply(c *Config) {
