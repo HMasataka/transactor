@@ -60,5 +60,6 @@ func (t *tx) RequiresNew(ctx context.Context, fn transactor.DoInTransaction, opt
 		}
 	}()
 
-	return fn(context.WithValue(ctx, contextKey(t.shardKeyProvider(ctx)), tx))
+	err = fn(context.WithValue(ctx, contextKey(t.shardKeyProvider(ctx)), tx))
+	return err
 }
